@@ -2,9 +2,26 @@ const db = require("../../firebase-config/firebase");
 const logger = require("../../utils/logger");
 
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+      },
+      body: "",
+    };
+  }
+
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+      },
       body: JSON.stringify({ error: "Method not allowed" }),
     };
   }
@@ -12,6 +29,7 @@ exports.handler = async (event) => {
   try {
     const { email, idNumber } = JSON.parse(event.body);
 
+    logger.info(`Checking for existing applications with email: ${email}`);
     const existingApplications = await db
       .collection("creditApplications")
       .where("email", "==", email)
@@ -21,12 +39,18 @@ exports.handler = async (event) => {
       logger.warn(`Duplicated email: ${email}`);
       return {
         statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+        },
         body: JSON.stringify({
           error: "There's an application with this email",
         }),
       };
     }
 
+    logger.info(`Checking for existing applications with ID: ${idNumber}`);
     const existingByIdNumber = await db
       .collection("creditApplications")
       .where("idNumber", "==", idNumber)
@@ -36,6 +60,11 @@ exports.handler = async (event) => {
       logger.warn(`Duplicated ID: ${idNumber}`);
       return {
         statusCode: 400,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+        },
         body: JSON.stringify({ error: "There's an application with this ID" }),
       };
     }
@@ -49,6 +78,11 @@ exports.handler = async (event) => {
     logger.info(`Application created with id: ${docRef.id}`);
     return {
       statusCode: 201,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+      },
       body: JSON.stringify({
         id: docRef.id,
         message: "Application created successfully",
@@ -58,6 +92,11 @@ exports.handler = async (event) => {
     logger.error(`Error creating the application: ${error}`);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+      },
       body: JSON.stringify({ error: "Error creating the application" }),
     };
   }
