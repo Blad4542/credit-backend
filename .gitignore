@@ -24,3 +24,5 @@ build/
 
 # Netlify-specific
 .netlify/
+
+firebase-config/serviceAccountKey.json

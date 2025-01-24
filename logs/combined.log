@@ -5,3 +5,9 @@
 2025-01-22 22:03:13 [WARN]: Solicitud duplicada para el email: juan.perez@example.com
 2025-01-22 22:04:14 [WARN]: Duplicaded email: juan.perez@example.com
 2025-01-22 22:04:23 [WARN]: Duplicated ID: 12345678
+2025-01-23 20:05:20 [INFO]: Getting all applications
+2025-01-23 20:05:21 [INFO]: Applications found: 2
+2025-01-23 20:07:04 [INFO]: Getting all applications
+2025-01-23 20:07:05 [INFO]: Applications found: 2
+2025-01-23 20:07:08 [INFO]: Getting application by id
+2025-01-23 20:07:18 [INFO]: Getting application by id

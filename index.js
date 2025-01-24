@@ -6,7 +6,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const applicationRoutes = require("./routes/applications");
-const logger = require("./logger");
+const logger = require("./utils/logger");
 
 dotenv.config();
 const app = express();
