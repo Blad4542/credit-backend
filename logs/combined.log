@@ -1,0 +1,7 @@
+2025-01-22 21:47:04 [INFO]: Getting all applications
+2025-01-22 21:47:04 [INFO]: Applications found: 2
+2025-01-22 21:47:56 [INFO]: Creating a new application
+2025-01-22 21:47:56 [INFO]: Application created with id: faKgaaaQmAMWmagvrosf
+2025-01-22 22:03:13 [WARN]: Solicitud duplicada para el email: juan.perez@example.com
+2025-01-22 22:04:14 [WARN]: Duplicaded email: juan.perez@example.com
+2025-01-22 22:04:23 [WARN]: Duplicated ID: 12345678
