@@ -8,7 +8,6 @@ exports.handler = async () => {
 
     const snapshot = await db.collection("creditApplications").get();
 
-    // Check if there are documents in the snapshot
     if (snapshot.empty) {
       logger.warn("No applications found in the Firestore collection.");
       return {

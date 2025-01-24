@@ -11,7 +11,7 @@ exports.handler = async (event) => {
 
   try {
     logger.info("Getting application by id");
-    const { id } = event.queryStringParameters; // Obtenemos el ID de los parámetros
+    const { id } = event.queryStringParameters;
     const doc = await db.collection("creditApplications").doc(id).get();
 
     if (!doc.exists) {
