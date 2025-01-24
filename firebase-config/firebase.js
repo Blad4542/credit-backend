@@ -1,31 +1,20 @@
+require("dotenv").config(); // Importa dotenv
+
 const admin = require("firebase-admin");
-require("dotenv").config(); // Para cargar las variables de entorno
 
-// Construir el objeto de credenciales
-let serviceAccount;
+// Crea un objeto para inicializar Firebase con las variables de entorno
+const serviceAccount = {
+  type: "service_account",
+  project_id: process.env.FIREBASE_PROJECT_ID,
+  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"), // Escapa los saltos de línea
+  client_email: process.env.FIREBASE_CLIENT_EMAIL,
+};
 
-if (process.env.NODE_ENV === "production") {
-  // Usar variables de entorno en producción
-  serviceAccount = {
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"), // Importante para manejar saltos de línea
-  };
-} else {
-  // Usar archivo JSON en desarrollo
-  serviceAccount = require("./serviceAccountKey.json");
-}
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+});
 
-// Inicializar Firebase Admin si no está ya inicializado
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL:
-      process.env.FIREBASE_DATABASE_URL ||
-      "https://creditapp-56a50.firebaseio.com",
-  });
-}
-
-// Exportar la instancia de Firestore
+// Exporta la instancia de Firestore
 const db = admin.firestore();
 module.exports = db;
