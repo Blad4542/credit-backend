@@ -158,3 +158,45 @@ netlify deploy --prod
   "selfieBase64": "base64string"
 }
 ```
+
+    Respuestas
+    201 Created: Solicitud registrada exitosamente.
+
+    409 Conflict: Registro ya existente.
+    500 Internal Server Error: Error en el servidor.
+
+- **GET /getApplications**
+
+Obtiene las solicitudes registradas con paginación.
+
+Query Parameters:
+page (opcional): Número de página.
+limit (opcional): Cantidad de registros por página.
+Respuestas:
+200 OK:
+
+```json
+{
+  "data": [
+    {
+      "id": "123",
+      "firstName": "John",
+      "lastName": "Doe"
+    }
+  ],
+  "totalRecords": 100
+}
+```
+
+500 Internal Server Error: Error en el servidor.
+
+## 📘 Notas importantes
+
+Firestore:
+
+Asegúrate de que tu proyecto de Firebase esté configurado correctamente con Firestore habilitado.
+Proporciona las credenciales necesarias en el archivo .env.
+
+CORS:
+
+Si tu frontend está desplegado en una URL diferente a la de desarrollo, actualiza el valor de CORS_ORIGIN en el archivo .env.
