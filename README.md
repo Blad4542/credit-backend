@@ -49,15 +49,20 @@ src/
 ## ⚙️ Instalación y Configuración
 
 ### 1. Clonar el repositorio
+
 ```bash
 git clone <URL-del-repositorio>
 cd backend-app
 
+```
+
 ### 2. Instalar dependencias
+
 ```bash
 npm install
 # o
 yarn install
+```
 
 ### 3. Configurar Variables de entorno
 
@@ -68,7 +73,88 @@ FIREBASE_PROJECT_ID=<tu-firebase-project-id>
 FIREBASE_PRIVATE_KEY=<tu-private-key>
 FIREBASE_CLIENT_EMAIL=<tu-client-email>
 CORS_ORIGIN=http://localhost:3000 # URL del frontend
+```
 
+### 4. Configuración para Netlify
 
+Crear estructura de carpetas
+Crea la carpeta netlify/functions si no existe, y organiza tus funciones en ella:
 
+```plaintext
+netlify/
+└── functions/
+    ├── getApplications.js
+    ├── createApplication.js
+```
 
+En cada archivo de la función, exportala siguiendo el estándar de Netlify
+
+```bash
+const express = require("express");
+const serverless = require("serverless-http");
+const app = express();
+
+// Middleware y rutas
+app.use(express.json());
+
+// Rutas aquí
+app.get("/api/getApplications", async (req, res) => {
+  // Lógica de consulta
+});
+
+module.exports.handler = serverless(app);
+
+```
+
+Crear archivo netlify.toml
+Crea un archivo netlify.toml en la raíz del proyecto con el siguiente contenido:
+
+```toml
+[build]
+  functions = "netlify/functions"
+```
+
+### 5. Probar localmente con Netlify CLI
+
+Instala la CLI de Netlify si no la tienes instalada:
+
+```bash
+npm install -g netlify-cli
+```
+
+Inicia el entorno local para probar las funciones:
+
+```bash
+netlify dev
+
+```
+
+### 6. Desplegar en Netlify
+
+Conéctate a tu cuenta de Netlify y despliega el proyecto:
+
+```bash
+netlify deploy --prod
+```
+
+## 📂 Endpoints
+
+- **POST /createApplication**
+  Registra una nueva solicitud.
+
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johndoe@example.com",
+  "phoneNumber": "123456789",
+  "idType": "DNI",
+  "idNumber": "1234567890",
+  "department": "San José",
+  "municipality": "Escazú",
+  "address": "Calle 123",
+  "monthlyIncome": 5000,
+  "idDocumentBase64": "base64string",
+  "selfieBase64": "base64string"
+}
+```
